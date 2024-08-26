@@ -45,7 +45,7 @@ export default function index() {
           <Text className=" text-base  text-black text-center">
             ¿No tienes una cuenta?
           </Text>
-          <Link asChild href={"/register-account"}>
+          <Link asChild href={"Auth/register-account"}>
             <TouchableOpacity>
               <Text className=" text-base font-bold text-green-900 text-center ml-1">
                 Crear cuenta

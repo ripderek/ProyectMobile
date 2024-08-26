@@ -1,6 +1,7 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export const HomeIcon = (props) => (
   <Entypo name="home" size={24} color="white" {...props} />
@@ -24,4 +25,12 @@ export const Phone = ({ sizeIcon, colorIcon }) => (
 
 export const InfoIcon2 = ({ sizeIcon, colorIcon }) => (
   <Feather name="info" size={sizeIcon} color={colorIcon} />
+);
+
+export const AccountICon = ({ sizeIcon, colorIcon }) => (
+  <MaterialCommunityIcons
+    name="account-box-outline"
+    size={sizeIcon}
+    color={colorIcon}
+  />
 );

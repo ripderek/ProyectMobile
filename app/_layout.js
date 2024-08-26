@@ -12,12 +12,8 @@ export default function Layout() {
           headerStyle: { backgroundColor: "black" },
           headerTintColor: "white",
           headerTitle: "",
-          headerLeft: () => <Logo />,
-          headerRight: () => (
-            <Link asChild href={"/about"} className="text-white">
-              <InfoIcon />
-            </Link>
-          ),
+          headerLeft: () => {},
+          headerRight: () => {},
         }}
       />
     </View>
