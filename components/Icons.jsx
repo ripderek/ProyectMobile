@@ -15,6 +15,9 @@ export const BackIcon = (props) => (
   <AntDesign name="back" size={24} color="black" {...props} />
 );
 
+export const CheckIcon = (props) => (
+  <AntDesign name="checkcircleo" size={24} color="black" {...props} />
+);
 export const UserIcon = ({ sizeIcon, colorIcon }) => (
   <AntDesign name="user" size={sizeIcon} color={colorIcon} />
 );
@@ -25,6 +28,10 @@ export const Phone = ({ sizeIcon, colorIcon }) => (
 
 export const InfoIcon2 = ({ sizeIcon, colorIcon }) => (
   <Feather name="info" size={sizeIcon} color={colorIcon} />
+);
+
+export const ErrorIcon = ({ sizeIcon, colorIcon }) => (
+  <Feather name="x-circle" size={sizeIcon} color={colorIcon} />
 );
 
 export const AccountICon = ({ sizeIcon, colorIcon }) => (

@@ -383,7 +383,7 @@ export function Registeraccount() {
             </View>
           )}
 
-          {/* BOTON SOLO PARA HACER PRUEBA */}
+          {/* BOTON SOLO PARA HACER PRUEBA 
           <View className="w-full">
             <Link
               asChild
@@ -397,6 +397,7 @@ export function Registeraccount() {
               </TouchableOpacity>
             </Link>
           </View>
+*/}
         </View>
       </ScrollView>
     </Screen>
