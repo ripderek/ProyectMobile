@@ -16,6 +16,9 @@ import {
   Phone,
   InfoIcon2,
   AccountICon,
+  EyeIcon,
+  EyeWithLineIcon,
+  CheclMarkIcon,
 } from "../../components/Icons";
 import { Loader } from "../../components/Layouts/Loader";
 import axios from "axios";
@@ -28,6 +31,7 @@ export function Registeraccount() {
   const [OpenModal, setOpenModal] = useState(false);
   const [OpenLoader, setOpenLoader] = useState(false);
   const [ID_Persona, setIDpersona] = useState("1");
+  const [VerContra, setVerContra] = useState(true);
   //estado para almacenar toda la informacion
   const [InfoRegistrar, SetInfoRegistrar] = useState({
     cedula: "",
@@ -39,6 +43,8 @@ export function Registeraccount() {
     genero: "1",
     ciudad: "1",
   });
+  const [VerContra2, setVerContra2] = useState(true);
+  const [RepetirContrasena, SetRepetirContrasena] = useState("");
   //constante para guardar los nuevos datos
   const HandleChange = (name, value) => {
     //console.log(name, value);
@@ -47,27 +53,31 @@ export function Registeraccount() {
   };
   //funcion para enviar los datos a la API
   const EnviarDatosRegistrar = async () => {
-    //primero hay que verificar si la informacion esta correcta por ejemplo si no van vacios los inputs y el tamano de la cedula y celular
-    if (VerficarInformacion()) {
-      setOpenLoader(true);
-      try {
-        const result = await axios.post(
-          "http://aplicaciones.uteq.edu.ec:9009/api/persona/save",
-          InfoRegistrar,
-          {
-            withCredentials: true,
-          }
-        );
-        //Capturar el resultado para obtener el ID que devuelve despues de crearse el usuario
-        //console.log(result.data);
-        setIDpersona(result.data.id);
-        //se abre el modal indicando que se envio el codigo al correo o al celular registrado
-        setOpenLoader(false);
-        setOpenModal(true);
-      } catch (error) {
-        alert("Error en la peticion");
-        console.log(error);
-        setOpenLoader(false);
+    //verificar los parametros de la contrasena
+    if (VerificarContrasenia()) {
+      //primero hay que verificar si la informacion esta correcta por ejemplo si no van vacios los inputs y el tamano de la cedula y celular
+      if (VerficarInformacion()) {
+        setOpenLoader(true);
+        try {
+          //  console.log(InfoRegistrar);
+          const result = await axios.post(
+            "http://aplicaciones.uteq.edu.ec:9009/api/persona/save",
+            InfoRegistrar,
+            {
+              withCredentials: true,
+            }
+          );
+          //Capturar el resultado para obtener el ID que devuelve despues de crearse el usuario
+          //console.log(result.data);
+          setIDpersona(result.data.id);
+          //se abre el modal indicando que se envio el codigo al correo o al celular registrado
+          setOpenLoader(false);
+          setOpenModal(true);
+        } catch (error) {
+          alert("Error en la peticion");
+          console.log(error);
+          setOpenLoader(false);
+        }
       }
     }
   };
@@ -117,7 +127,30 @@ export function Registeraccount() {
       alert("Debe seleccionar un genero");
       return false;
     }
-
+    return true;
+  };
+  const VerificarContrasenia = () => {
+    if (InfoRegistrar.contrasenia.length < 6) {
+      alert("La contraseña debe tener al menos 6 caracteres");
+      return false;
+    }
+    if (!containsUppercase(InfoRegistrar.contrasenia)) {
+      alert("La contraseña debe tener al menos 1 mayúscula");
+      return false;
+    }
+    if (!containsLowercase(InfoRegistrar.contrasenia)) {
+      alert("La contraseña debe tener al menos 1 minúscula");
+      return false;
+    }
+    if (!containsNumber(InfoRegistrar.contrasenia)) {
+      alert("La contraseña debe tener al menos 1 número");
+      return false;
+    }
+    if (InfoRegistrar.contrasenia !== RepetirContrasena) {
+      alert("Las contraseñas no coinciden");
+      return false;
+    }
+    //si no ocurre nada entonces retorna true que quiere decir que todo esta correcto XD
     return true;
   };
 
@@ -169,6 +202,118 @@ export function Registeraccount() {
           </View>
         </View>
       </Modal>
+    );
+  }
+  const containsUppercase = (str) => /[A-Z]/.test(str);
+  const containsLowercase = (str) => /[a-z]/.test(str);
+  const containsNumber = (str) => /[0-9]/.test(str);
+
+  //funcion para retornar las indicaciones de la contrasenia
+  function renderIndicacionesContra() {
+    return (
+      <View className="ml-8">
+        <View className="flex-row">
+          {InfoRegistrar.contrasenia.length >= 6 ? (
+            <View className="mt-1">
+              <CheclMarkIcon colorIcon={"green"} sizeIcon={16} />
+            </View>
+          ) : (
+            <Text className={`text-xs mt-1 text-left ml-1 text-red-900`}>
+              X
+            </Text>
+          )}
+          <Text
+            className={`text-base text-left ml-1 ${
+              InfoRegistrar.contrasenia.length >= 6
+                ? "text-green-900"
+                : "text-red-900"
+            }`}
+          >
+            Al menos 6 caracteres
+          </Text>
+        </View>
+        <View className="flex-row">
+          {containsUppercase(InfoRegistrar.contrasenia) ? (
+            <View className="mt-1">
+              <CheclMarkIcon colorIcon={"green"} sizeIcon={16} />
+            </View>
+          ) : (
+            <Text className={`text-xs mt-1 text-left ml-1 text-red-900`}>
+              X
+            </Text>
+          )}
+          <Text
+            className={`text-base text-left ml-1 ${
+              containsUppercase(InfoRegistrar.contrasenia)
+                ? "text-green-900"
+                : "text-red-900"
+            }`}
+          >
+            Al menos 1 mayúscula
+          </Text>
+        </View>
+        <View className="flex-row">
+          {containsLowercase(InfoRegistrar.contrasenia) ? (
+            <View className="mt-1">
+              <CheclMarkIcon colorIcon={"green"} sizeIcon={16} />
+            </View>
+          ) : (
+            <Text className={`text-xs mt-1 text-left ml-1 text-red-900`}>
+              X
+            </Text>
+          )}
+          <Text
+            className={`text-base text-left ml-1 ${
+              containsLowercase(InfoRegistrar.contrasenia)
+                ? "text-green-900"
+                : "text-red-900"
+            }`}
+          >
+            Al menos 1 minúscula
+          </Text>
+        </View>
+        <View className="flex-row">
+          {containsNumber(InfoRegistrar.contrasenia) ? (
+            <View className="mt-1">
+              <CheclMarkIcon colorIcon={"green"} sizeIcon={16} />
+            </View>
+          ) : (
+            <Text className={`text-xs mt-1 text-left ml-1 text-red-900`}>
+              X
+            </Text>
+          )}
+          <Text
+            className={`text-base text-left ml-1 ${
+              containsNumber(InfoRegistrar.contrasenia)
+                ? "text-green-900"
+                : "text-red-900"
+            }`}
+          >
+            Al menos 1 número
+          </Text>
+        </View>
+        {/* Si las contrasenias coinciden o no */}
+        <View className="flex-row">
+          {InfoRegistrar.contrasenia === RepetirContrasena ? (
+            <View className="mt-1">
+              <CheclMarkIcon colorIcon={"green"} sizeIcon={16} />
+            </View>
+          ) : (
+            <Text className={`text-xs mt-1 text-left ml-1 text-red-900`}>
+              X
+            </Text>
+          )}
+          <Text
+            className={`text-base text-left ml-1 ${
+              InfoRegistrar.contrasenia === RepetirContrasena
+                ? "text-green-900"
+                : "text-red-900"
+            }`}
+          >
+            Las contraseñas coinciden
+          </Text>
+        </View>
+      </View>
     );
   }
 
@@ -311,16 +456,69 @@ export function Registeraccount() {
               onChangeText={(value) => HandleChange("correo", value)}
             />
           </View>
-          <View className="bg-transparent border border-1 border-gray-300 p-5 rounded-3xl w-full">
-            <TextInput
-              placeholder="CONTRASEÑA"
-              placeholderTextColor={"black"}
-              //className="uppercase"
-              secureTextEntry={true}
-              value={InfoRegistrar.contrasenia}
-              onChangeText={(value) => HandleChange("contrasenia", value)}
-            />
+          <View className=" flex-row">
+            <View className="bg-transparent border border-1 border-gray-300 p-5 rounded-3xl w-5/6">
+              <TextInput
+                placeholder="CONTRASEÑA"
+                placeholderTextColor={"black"}
+                //className="uppercase"
+                secureTextEntry={VerContra}
+                value={InfoRegistrar.contrasenia}
+                onChangeText={(value) => HandleChange("contrasenia", value)}
+              />
+            </View>
+            <View className="w-1/5">
+              {VerContra ? (
+                <TouchableOpacity
+                  className="w-auto bg-transparent items-center mt-4 "
+                  onPress={() => setVerContra(false)}
+                >
+                  <EyeIcon colorIcon={"gray"} sizeIcon={35} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  className="w-auto bg-transparent items-center mt-4 "
+                  onPress={() => setVerContra(true)}
+                >
+                  <EyeWithLineIcon colorIcon={"gray"} sizeIcon={35} />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
+          {/* Repetir contrasenia */}
+          {InfoRegistrar.contrasenia.length !== 0 && (
+            <View className=" flex-row">
+              <View className="bg-transparent border border-1 border-gray-300 p-5 rounded-3xl w-5/6">
+                <TextInput
+                  placeholder="REPETIR CONTRASEÑA"
+                  placeholderTextColor={"black"}
+                  //className="uppercase"
+                  secureTextEntry={VerContra2}
+                  value={RepetirContrasena}
+                  onChangeText={(value) => SetRepetirContrasena(value)}
+                />
+              </View>
+              <View className="w-1/5">
+                {VerContra2 ? (
+                  <TouchableOpacity
+                    className="w-auto bg-transparent items-center mt-4 "
+                    onPress={() => setVerContra2(false)}
+                  >
+                    <EyeIcon colorIcon={"gray"} sizeIcon={35} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    className="w-auto bg-transparent items-center mt-4 "
+                    onPress={() => setVerContra2(true)}
+                  >
+                    <EyeWithLineIcon colorIcon={"gray"} sizeIcon={35} />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          )}
+          {InfoRegistrar.contrasenia.length !== 0 && renderIndicacionesContra()}
+
           {/* FOOTER DEL FORM  */}
           <View className="flex-row w-full ml-2">
             <View className="mt-3">

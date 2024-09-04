@@ -40,7 +40,7 @@ export function Inicio_sesion() {
   const IniciarSesion = async () => {
     //primero hay que verificar si la informacion esta correcta por ejemplo si no van vacios los inputs y el tamano de la cedula y celular
     if (VerficarInformacion()) {
-      console.log(DatosSesion);
+      // console.log(DatosSesion);
       setOpenLoader(true);
       try {
         const result = await axios.post(
@@ -56,7 +56,7 @@ export function Inicio_sesion() {
       } catch (error) {
         console.log(error);
         // alert(error.response.data.error);
-        //console.log(error);
+        console.log(error);
         setOpenLoader(false);
         setOpenError(true);
         //aqui capturar el error que se envia desde la API
@@ -73,7 +73,7 @@ export function Inicio_sesion() {
           headerTintColor: "white",
           headerLeft: () => {},
           headerRight: () => {},
-          headerTitle: "Inicio Sesion",
+          headerTitle: "Inicio Sesión",
           headerTitleAlign: "center",
         }}
       />

@@ -2,11 +2,21 @@ import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export const HomeIcon = (props) => (
   <Entypo name="home" size={24} color="white" {...props} />
 );
+export const EyeIcon = ({ sizeIcon, colorIcon }) => (
+  <Entypo name="eye" size={sizeIcon} color={colorIcon} />
+);
+export const EyeWithLineIcon = ({ sizeIcon, colorIcon }) => (
+  <Entypo name="eye-with-line" size={sizeIcon} color={colorIcon} />
+);
 
+export const CheclMarkIcon = ({ sizeIcon, colorIcon }) => (
+  <Ionicons name="checkmark" size={sizeIcon} color={colorIcon} />
+);
 export const InfoIcon = (props) => (
   <AntDesign name="infocirlce" size={24} color="black" {...props} />
 );
@@ -18,6 +28,7 @@ export const BackIcon = (props) => (
 export const CheckIcon = (props) => (
   <AntDesign name="checkcircleo" size={24} color="black" {...props} />
 );
+
 export const UserIcon = ({ sizeIcon, colorIcon }) => (
   <AntDesign name="user" size={sizeIcon} color={colorIcon} />
 );
