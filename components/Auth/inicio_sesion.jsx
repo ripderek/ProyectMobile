@@ -44,7 +44,7 @@ export function Inicio_sesion() {
       setOpenLoader(true);
       try {
         const result = await axios.post(
-          "http://aplicaciones.uteq.edu.ec:9009/api/persona/login",
+          "https://aplicaciones.uteq.edu.ec:9009/api/persona/login",
           DatosSesion,
           {
             withCredentials: true,
@@ -56,7 +56,6 @@ export function Inicio_sesion() {
       } catch (error) {
         console.log(error);
         // alert(error.response.data.error);
-        console.log(error);
         setOpenLoader(false);
         setOpenError(true);
         //aqui capturar el error que se envia desde la API

@@ -61,7 +61,7 @@ export function Registeraccount() {
         try {
           //  console.log(InfoRegistrar);
           const result = await axios.post(
-            "http://aplicaciones.uteq.edu.ec:9009/api/persona/save",
+            "https://aplicaciones.uteq.edu.ec:9009/api/persona/save",
             InfoRegistrar,
             {
               withCredentials: true,
