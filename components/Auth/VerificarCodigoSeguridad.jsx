@@ -28,7 +28,7 @@ export function VerificacionIdPersona({ IDPersona }) {
     setOpenLoader(true);
     try {
       const result = await axios.post(
-        "https://aplicaciones.uteq.edu.ec:9009/api/persona/enviarCodigo",
+        "http://aplicaciones.uteq.edu.ec:9500/api/persona/enviarCodigo",
         { id: IDPersona },
         {
           withCredentials: true,
@@ -48,7 +48,7 @@ export function VerificacionIdPersona({ IDPersona }) {
     try {
       console.log({ id: IDPersona, code: parseInt(optString) });
       const result = await axios.post(
-        "https://aplicaciones.uteq.edu.ec:9009/api/persona/verificarCodigo",
+        "http://aplicaciones.uteq.edu.ec:9500/api/persona/verificarCodigo",
         { id: IDPersona, code: parseInt(optString) },
         {
           withCredentials: true,

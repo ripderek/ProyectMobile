@@ -44,7 +44,7 @@ export function Inicio_sesion() {
       setOpenLoader(true);
       try {
         const result = await axios.post(
-          "https://aplicaciones.uteq.edu.ec:9009/api/persona/login",
+          "http://aplicaciones.uteq.edu.ec:9500/api/persona/login",
           DatosSesion,
           {
             withCredentials: true,
